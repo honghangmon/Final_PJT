@@ -1,0 +1,35 @@
+
+# API 문서
+
+## 사용자 관리
+
+| HTTP 메서드 | API path              | 설명                               | Request Body                                                   | Response Body                                                |
+|-------------|------------------------|------------------------------------|------------------------------------------------------------|---------------------------------------------------------|
+| POST        | /api/users             | 새 사용자를 생성                  | `{ "username": "testuser", "email": "test@example.com", "password": "password123" }` | `{ "id": 1, "username": "testuser", "email": "test@example.com" }` |
+| GET         | /api/users/{id}        | ID로 사용자 세부정보 조회         | N/A                                                        | `{ "id": 1, "username": "testuser", "email": "test@example.com" }` |
+| PUT         | /api/users/{id}        | 사용자 정보 업데이트              | `{ "username": "updateduser", "email": "new@example.com" }` | `{ "id": 1, "username": "updateduser", "email": "new@example.com" }` |
+| DELETE      | /api/users/{id}        | 사용자 삭제                       | N/A                                                        | `{ "message": "사용자가 삭제되었습니다." }`                |
+
+---
+
+## 팀 관리
+
+| HTTP 메서드 | API path                     | 설명                                    | Request Body                        | Response Body                   |
+|-------------|-------------------------------|-----------------------------------------|-------------------------------------|---------------------------------|
+| POST        | /api/teams                    | 새로운 팀을 생성합니다                  | `{ "teamName": "Team A", "leaderId": 1 }` | `{ "teamId": 1, "teamName": "Team A", "leaderId": 1 }` |
+| GET         | /api/teams/{id}               | ID로 팀 세부정보 조회                   | N/A                                 | `{ "teamId": 1, "teamName": "Team A", "leaderId": 1 }` |
+| PUT         | /api/teams/{id}               | 팀 정보 업데이트                        | `{ "teamName": "Updated Team Name" }` | `{ "teamId": 1, "teamName": "Updated Team Name", "leaderId": 1 }` |
+| DELETE      | /api/teams/{id}               | 팀 삭제                                 | N/A                                 | `{ "message": "팀이 삭제되었습니다." }`                 |
+| POST        | /api/teams/{teamId}/members   | 팀에 사용자를 추가합니다                | `{ "userId": 123 }`                 | `{ "message": "User added to team successfully." }` |
+| DELETE      | /api/teams/{teamId}/members/{userId} | 팀에서 사용자를 제거합니다         | N/A                                 | `{ "message": "User removed from team successfully." }` |
+
+---
+
+## 경기 관리
+
+| HTTP 메서드 | API path              | 설명                               | Request Body                                                   | Response Body                                                |
+|-------------|------------------------|------------------------------------|------------------------------------------------------------|---------------------------------------------------------|
+| POST        | /api/matches           | 새로운 경기를 생성합니다           | `{ "team1Id": 1, "team2Id": 2, "scheduledTime": "2024-12-01T15:00:00Z" }` | `{ "matchId": 1, "team1Id": 1, "team2Id": 2, "scheduledTime": "2024-12-01T15:00:00Z", "status": "scheduled" }` |
+| GET         | /api/matches/{id}      | ID로 경기 세부정보 조회           | N/A                                                        | `{ "matchId": 1, "team1Id": 1, "team2Id": 2, "scheduledTime": "2024-12-01T15:00:00Z", "status": "scheduled" }` |
+| PUT         | /api/matches/{id}/status | 경기 상태 업데이트               | `{ "status": "completed" }`                                 | `{ "matchId": 1, "status": "completed" }` |
+| DELETE      | /api/matches/{id}      | 경기 삭제                         | N/A                                                        | `{ "message": "매치가 삭제되었습니다." }`                |

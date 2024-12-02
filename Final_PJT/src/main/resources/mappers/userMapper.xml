@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.pjt.model.dao.UserDao">
+
+    <!-- 사용자 추가 -->
+    <insert id="insertUser" parameterType="User">
+        INSERT INTO users (user_name, password, nickname, email, phone_number, age, gender, created_at, updated_at)
+        VALUES (#{userName}, #{password}, #{nickname}, #{email}, #{phoneNumber}, #{age}, #{gender}, NOW(), NOW());
+    </insert>
+
+    <!-- 사용자 조회 (사용자 이름으로) -->
+    <select id="findByUserName" parameterType="string" resultType="User">
+        SELECT * FROM users WHERE user_name = #{userName};
+    </select>
+
+    <!-- 사용자 조회 (ID로) -->
+    <select id="findById" parameterType="int" resultType="User">
+        SELECT * FROM users WHERE user_id = #{userId};
+    </select>
+    
+    <!-- 전체 유저 조회 -->
+    <select id="findAllUsers" resultType="User">
+    	SELECT *
+    	FROM users;
+    </select>
+
+    <!-- 사용자 정보 업데이트 -->
+    <update id="updateUser" parameterType="User">
+        UPDATE users
+        SET password = #{password},
+        	nickname = #{nickname},
+            email = #{email},
+            phone_number = #{phoneNumber},
+            age = #{age},
+            gender = #{gender},
+            updated_at = NOW()
+        WHERE user_id = #{userId};
+    </update>
+
+    <!-- 사용자 삭제 -->
+    <delete id="deleteUser" parameterType="int">
+        DELETE FROM users WHERE user_id = #{userId};
+    </delete>
+    
+    <!-- 특정 유저가 속한 팀 리스트 조회 -->
+    <select id="findTeamsByUserId" parameterType="int" resultType="Team">
+        SELECT t.team_id, t.team_name, t.leader_id, t.created_at, t.updated_at
+        FROM teams t
+        INNER JOIN team_members tm ON t.team_id = tm.team_id
+        WHERE tm.user_id = #{userId};
+    </select>
+</mapper>

@@ -1,0 +1,44 @@
+Table users {
+  user_id INT [pk, increment] // Primary Key, Auto Increment
+  user_name VARCHAR [not null, unique] // Unique username
+  password VARCHAR [not null] // User's password
+  nickname VARCHAR [not null, unique] // Unique nickname
+  email VARCHAR [not null] // Email address
+  phone_number VARCHAR [not null, unique] // User's phone number
+  age INT [not null] // User's age
+  gender ENUM('male', 'female') [not null] // Gender of user
+  created_at DATETIME [default: `CURRENT_TIMESTAMP`] // Record creation time
+  updated_at DATETIME [default: `CURRENT_TIMESTAMP`] // Record update time
+}
+
+Table teams {
+  team_id INT [pk, increment] // Primary Key, Auto Increment
+  team_name VARCHAR [not null] // Team name
+  leader_id INT [not null] // User ID of the team leader
+  created_at DATETIME [default: `CURRENT_TIMESTAMP`] // Record creation time
+  updated_at DATETIME [default: `CURRENT_TIMESTAMP`] // Record update time
+}
+
+Table team_members {
+  team_id INT [not null] // Foreign Key: references teams
+  user_id INT [not null] // Foreign Key: references users
+  joined_at DATETIME [default: `CURRENT_TIMESTAMP`] // Record creation time
+}
+
+Table matches {
+  match_id INT [pk, increment] // Primary Key, Auto Increment
+  team1_id INT [not null] // Foreign Key: references teams
+  team2_id INT // Foreign Key: references teams
+  scheduled_time DATETIME [not null] // Scheduled match time
+  location VARCHAR [not null] // Match location
+  sports_type VARCHAR [not null] // Type of sport
+  status ENUM('pending', 'confirmed') [not null, default: 'pending'] // Match status
+  created_at DATETIME [default: `CURRENT_TIMESTAMP`] // Record creation time
+  updated_at DATETIME [default: `CURRENT_TIMESTAMP`] // Record update time
+}
+
+Ref: team_members.team_id > teams.team_id
+Ref: team_members.user_id > users.user_id
+Ref: matches.team1_id > teams.team_id
+Ref: matches.team2_id > teams.team_id
+Ref: teams.leader_id > users.user_id

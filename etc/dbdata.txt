@@ -1,0 +1,35 @@
+user 만들기
+{
+  "userName": "testing",
+  "password": "test",
+  "nickname": "nick",
+  "email": "email@email.com",
+  "phoneNumber": "010-5324-2387",
+  "age": "22",
+  "gender": "male"
+}
+
+login
+{
+  "userName": "honghangmon",
+  "password": "qwer1234"
+}
+
+team 만들기
+{
+  "teamName": "BRBR",
+  "leaderId": "1"
+}
+
+team member 추가
+{
+  "userId": 2
+}
+
+match 만들기
+{
+  "team1Id": 1,
+  "scheduledTime": "2024-12-01T15:00:00",
+  "location": "Seoul Stadium",
+  "sportsType": "soccer"
+}
